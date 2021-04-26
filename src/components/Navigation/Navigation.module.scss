@@ -1,0 +1,21 @@
+.navigation {
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.navlink {
+  font-weight: 700;
+  font-size: 24px;
+  text-decoration: none;
+  color: #1c3b55;
+  &:not(:last-child) {
+    margin-right: 35px;
+  }
+  &.activelink {
+    color: #0888f1;
+  }
+  &:hover {
+    color: #6a0499;
+  }
+}
