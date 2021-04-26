@@ -47,6 +47,8 @@ const Chart = () => {
     .join("-")
     .split(" ");
 
+  console.log(normalizeStartDate);
+
   const normalizeEndDate = endDate
     .toLocaleString()
     .slice(0, 10)

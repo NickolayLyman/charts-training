@@ -9,61 +9,54 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import dataUsers from "../mock/users.json";
+import userStatisticsData from "../mock/users_statistic.json";
 import { useHistory } from "react-router";
 
 const columns = [
-  { id: "id", label: "Id", minWidth: 170 },
-  { id: "first_name", label: "First Name", minWidth: 100 },
+  { id: "id", label: "Id", minWidth: 70, align: "center" },
+  { id: "first_name", label: "First Name", minWidth: 90, align: "center" },
   {
     id: "last_name",
     label: "Last Name",
-    minWidth: 170,
-    align: "right",
+    minWidth: 100,
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "email",
     label: "Email",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "gender",
     label: "Gender",
-    minWidth: 170,
-    align: "right",
+    minWidth: 100,
+    align: "center",
     format: (value) => value.toFixed(2),
   },
   {
     id: "ip_address",
     label: "IP address",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value) => value.toFixed(2),
   },
-];
-
-function createData({ id, first_name, last_name, email, gender, ip_address }) {
-  return { id, first_name, last_name, email, gender, ip_address };
-}
-
-const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
+  {
+    id: "page_views",
+    label: "Page views",
+    minWidth: 120,
+    align: "center",
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: "clicks",
+    label: "Clicks",
+    minWidth: 120,
+    align: "center",
+    format: (value) => value.toFixed(2),
+  },
 ];
 
 const useStyles = makeStyles({
@@ -71,7 +64,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   container: {
-    maxHeight: 440,
+    maxHeight: 500,
   },
 });
 
@@ -94,6 +87,12 @@ export default function Users() {
   const goToUserChart = (id) => {
     history.push("/chart", id);
   };
+
+  const newDataStatistics = userStatisticsData.map((item, index) => ({
+    ...item,
+    ...dataUsers[index],
+  }));
+
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -112,7 +111,7 @@ export default function Users() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataUsers
+            {newDataStatistics
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -140,9 +139,9 @@ export default function Users() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[10, 25, 50]}
         component="div"
-        count={rows.length}
+        count={newDataStatistics.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
